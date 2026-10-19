@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App sanitario</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="titulo">Aplicación Sanitario</h1>
+    <div id="login" class="activa">
+        <h2>Aplicación Sanitario</h2>
+        <hr>
+
+        <label for="user">Usuario:</label>
+        <input type="text" id="user" name="usuario" required>
+
+        <br>
+
+        <label for="contra">Contraseña:</label>
+        <input type="password" id="contra" name="password" required>
+
+        <br>
+
+        <button onCLick="entrar()">Entrar</button>
+        <button onClick="registrar()">Registrarse</button>
+    </div>
+
+    <div id="registro" class="inactiva">
+        <h2>Aplicación Sanitario</h2>
+        <hr>
+
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="nombre" required>
+
+        <br>
+
+        <label for="ape">Apellidos:</label>
+        <input type="text" id="ape" name="apellidos" required>
+
+        <br>
+
+        <label for="userNuevo">Login:</label>
+        <input type="text" id="userNuevo" name="usuarioNuevo" required>
+
+        <br>
+
+        <label for="contraNueva">Contraseña:</label>
+        <input type="password" id="contraNueva" name="passwordNueva" required>
+
+        <br>
+
+        <button onclick="guardar()">Guardar</button>
+        <button onclick="cancelarReg()">Cancelar</button>
+    </div>
+
+    <div id="main" class="inactiva">
+        <h2>Aplicación Sanitario</h2>
+        <hr>
+
+        <p>Bienvenido <span id="nombreSanit"></span> <button onclick="registrar()">Editar datos</button></p>
+
+        <h3>Reservas pendientes</h3>
+        <hr>
+
+        <table id="tablaPendientes" border="1">
+            <thead>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Modelo</th>
+                    <th>N. Serie</th>
+                    <th>Ubic.</th>
+                    <th>F. Petición</th>
+                    <th>H. Rest.</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        
+        <h3>Reservas realizadas</h3>
+        <hr>
+
+        <table id="tablaRealizadas" border="1">
+            <thead>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Modelo</th>
+                    <th>N. Serie</th>
+                    <th>H.E.</th>
+                    <th>F. Ini</th>
+                    <th>F. Fin</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <div class="botones-footer">
+            <button onclick="añadirRecurso()">Nueva reserva</button>
+            <br>
+            <button onclick="cerrarSesion()" class="boton-derecha">Salir</button>
+        </div>
+
+        <table id="avisosSanit" border="1">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Origen</th>
+                    <th>Texto</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="detalleRecurso" class="inactiva">
+
+        <h2>Aplicación Sanitario</h2>
+        <hr>
+
+        <h3>Nueva Reserva</h3>
+        <hr>
+
+        <div>
+            <label for="detalleCategoria">Categoría:</label>
+            <select id="detalleCategoria" onchange="actualizarModelo()"></select>
+        </div>
+
+        <div>
+            <label for="detalleModelo">Modelo:</label>
+            <select id="detalleModelo"></select>
+        </div>
+
+        <div>
+            <label for="detalleHorasUso">T. Est. Uso:</label>
+            <input type="number" id="detalleHorasUso" min="1">
+        </div>
+
+        <button onclick="buscarReserva()">Buscar</button>
+
+        <table id="tablaReservas" border="1">
+            <thead>
+                <tr>
+                    <th>N. Serie</th>
+                    <th>Ubicación</th>
+                    <th>H. rest.</th>
+                    <th>Valoración</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <br>
+
+        <button onclick="volverListado()">Volver al listado</button>
+
+    </div>
+
+    <div id="resenyaNueva" class="inactiva">
+        <h2>Aplicación Sanitario</h2>
+        <hr>
+
+        <h3>Reseña nueva</h3>
+        <hr>
+        
+        <div>
+            <label for="numSerieRecurso">Recurso:</label>
+            <span id="numSerieRecurso"></span> 
+        </div>
+
+        <div>
+            <label for="detalleValoracion">Valoración:</label>
+            <select id="detalleValoracion">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="detalleTexto">Texto:</label>
+            <input type="text" id="detalleTexto">
+        </div>
+       
+
+        <div class="botones-footer">
+            <button onclick="guardarResenya()">Guardar</button>
+            <br>
+            <button onclick="cancelarResenya()" class="boton-derecha">Cancelar</button>
+        </div>
+    </div>
+
+    <br>
+    <script src="rest.js"></script>
+    <script src="rpc.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>

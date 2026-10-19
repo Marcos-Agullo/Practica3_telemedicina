@@ -1,0 +1,101 @@
+body {
+    font-family: Verdana, Geneva, sans-serif;
+    background: linear-gradient(to bottom right, #ffe8ef, #f5ebff);
+    color: #555;
+    margin: 0;
+    padding: 40px;
+}
+
+.titulo {
+    text-align: center;
+    color: #a2185b;
+    font-size: 2.3rem;
+    margin-bottom: 40px;
+}
+
+#login,
+#registro,
+#main,
+#detalleRecurso {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 35px;
+    max-width: 1050px;
+    margin: auto;
+    margin-bottom: 30px;
+    border: 2px solid #f4d3e3;
+    box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+}
+
+th {
+    background: #c2185b;
+    color: white;
+    padding: 14px;
+}
+
+td {
+    padding: 14px;
+    border-bottom: 1px solid #f2d7e5;
+    text-align: center;
+}
+
+tr:nth-child(even){
+    background:#fff8fb;
+}
+
+button{
+    background:#c2185b;
+    color:white;
+    border:none;
+    padding:12px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.25s;
+}
+
+button:hover{
+    background:#d81b60;
+    transform:scale(1.05);
+}
+
+.botones-footer{
+    display:flex;
+    gap:15px;
+    margin-top:25px;
+}
+
+.boton-derecha{
+    margin-left:auto;
+}
+
+.blanco{background:white;}
+.azul{background:#e8f4ff;color:#1565c0;}
+.rojo{background:#ffefef;color:#d32f2f;}
+.verde{background:#eef9ef;color:#2e7d32;}
+
+input,
+select{
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #e8a8c6;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#c2185b;
+}
+
+.activa{
+    display:block;
+}
+
+.inactiva{
+    display:none;
+}

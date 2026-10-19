@@ -1,0 +1,121 @@
+body{
+    font-family: Tahoma, Arial, sans-serif;
+    background:#fdf4f8;
+    color:#444;
+    margin:0;
+    padding:25px;
+}
+
+.titulo{
+    text-align:center;
+    color:#8e2458;
+    font-size:2.6rem;
+    margin-bottom:25px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+}
+
+#login,
+#registro,
+#main,
+#detalleRecurso{
+    background:#fff;
+    max-width:1100px;
+    margin:20px auto;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 15px 35px rgba(142,36,88,.15);
+}
+
+table{
+    width:100%;
+    border-spacing:0;
+    border-collapse:separate;
+    overflow:hidden;
+    border-radius:20px;
+}
+
+th{
+    background:linear-gradient(90deg,#ad1457,#ce4b86);
+    color:white;
+    padding:16px;
+}
+
+td{
+    padding:16px;
+    text-align:center;
+    background:white;
+    border-bottom:2px solid #f7dce8;
+}
+
+button{
+    background:linear-gradient(90deg,#ad1457,#d81b60);
+    color:white;
+    border:none;
+    border-radius:20px;
+    padding:11px 28px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    opacity:.9;
+    transform:translateY(-4px);
+}
+
+.botones-footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+}
+
+.boton-derecha{
+    margin-left:auto;
+}
+
+.blanco{background:white;}
+.azul{background:#dcefff;color:#0d47a1;}
+.rojo{background:#ffe6e6;color:#b71c1c;}
+.verde{background:#e5f8e7;color:#1b5e20;}
+
+label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    box-sizing:border-box;
+    padding:12px;
+    border-radius:15px;
+    border:2px solid #efbfd4;
+    margin-bottom:15px;
+}
+
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#ad1457;
+    box-shadow:0 0 10px rgba(173,20,87,.2);
+}
+
+.activa{
+    display:block;
+    animation:fade .5s;
+}
+
+.inactiva{
+    display:none;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}

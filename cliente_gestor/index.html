@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login gestor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 class="titulo">Aplicación Gestor</h1>
+    <div id="login" class="activa">
+        <h2>Acceso</h2>
+        <hr>
+
+        <label for="user">Usuario:</label>
+        <input type="text" id="user" name="usuario" required>
+
+        <br>
+
+        <label for="contra">Contraseña:</label>
+        <input type="password" id="contra" name="password" required>
+
+        <br>
+
+        <button onCLick="entrar()">Entrar</button>
+        <button onClick="registrar()">Registrarse</button>
+    </div>
+
+    <div id="registro" class="inactiva">
+        <h2>Datos Gestor</h2>
+        <hr>
+
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" name="nombre" required>
+
+        <br>
+
+        <label for="ape">Apellidos:</label>
+        <input type="text" id="ape" name="apellidos" required>
+
+        <br>
+
+        <label for="userNuevo">Login:</label>
+        <input type="text" id="userNuevo" name="usuarioNuevo" required>
+
+        <br>
+
+        <label for="contraNueva">Contraseña:</label>
+        <input type="password" id="contraNueva" name="passwordNueva" required>
+
+        <br>
+
+        <button onclick="guardar()">Guardar</button>
+        <button onclick="cancelarReg()">Cancelar</button>
+    </div>
+
+    <div id="main" class="inactiva">
+        <h2>Inicio</h2>
+        <hr>
+
+        <p>Bienvenido <span id="nombreGestor"></span> <button onclick="registrar()">Editar datos</button></p>
+
+        <h3>Búsqueda de recursos</h3>
+        <hr>
+        <div>
+            <label for="categoriaSelect">Categoría:</label>
+            <select id="categoriaSelect" name="categoria">
+                <option value="">Todas</option>
+                <option value="1">Termómetros</option>
+                <option value="2">Estetoscopios</option>
+                <option value="3">Sillas de ruedas</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="modeloSelect">Modelo:</label>
+            <select id="modeloSelect" name="modelo">
+                <option value="">Todos</option>
+                <option value="1">Termómetro Digital Pro X</option>
+                <option value="2">Estetoscopio CardioPlus</option>
+                <option value="3">Silla de ruedas UltraLight 3000</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="ubicacionSelect">Ubicación:</label>
+            <select id="ubicacionSelect" name="ubicacion">
+                <option value="">Todas</option>
+                <option value="1">Sala de Urgencias</option>
+                <option value="2">Laboratorio Central</option>
+                <option value="3">Sillas de ruedas</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="estadoSelect">Estado:</label>
+            <select id="estadoSelect" name="estado">
+                <option value="">Todos</option>
+                <option value="0">Operativo</option>
+                <option value="1">De baja</option>
+                <option value="2">En mantenimiento</option>
+            </select>
+        </div>
+
+        <button onclick="buscar()">Buscar</button>
+
+        <table id="tablaRecursos" border="1">
+            <thead>
+                <tr>
+                    <th>N. Serie</th>
+                    <th>Categoría</th>
+                    <th>Modelo</th>
+                    <th>Ubicación</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        
+        <div class="botones-footer">
+            <button onclick="añadirRecurso()">Añadir recurso</button>
+            <button onclick="cerrarSesion()" class="boton-derecha">Cerrar sesión</button>
+        </div>
+
+        <table id="avisosGestor" border="1">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Origen</th>
+                    <th>Texto</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <h3>Ministerio de Sanidad (Área 16 - Psiquiatría)</h3>
+        <hr>
+        <div class="botones-footer" style="margin-bottom: 20px;">
+            <button onclick="enviarReservasMinisterio()">Enviar reservas al Ministerio</button>
+            <button onclick="cargarRankingMinisterio()">Actualizar ranking</button>
+        </div>
+
+        <h4>Ranking de uso por Área Médica</h4>
+        <table id="tablaRanking" border="1">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Área Médica</th>
+                    <th>Reservas Totales</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="detalleRecurso" class="inactiva">
+
+        <h2>Recurso</h2>
+        <hr>
+
+        <h3>Datos recurso</h3>
+        
+        <hr>
+
+        <div>
+            <label for="detalleCategoria">Categoría:</label>
+            <select id="detalleCategoria"></select>
+        </div>
+
+        <div>
+            <label for="detalleModelo">Modelo:</label>
+            <select id="detalleModelo"></select>
+        </div>
+
+        <div>
+            <label for="detalleNumeroSerie">Núm. Serie:</label>
+            <input type="text" id="detalleNumeroSerie">
+        </div>
+
+        <div>
+            <label for="detalleUbicacion">Ubicación:</label>
+            <select id="detalleUbicacion"></select>
+        </div>
+
+        <div>
+            <label for="detalleEstado">Estado:</label>
+            <select id="detalleEstado">
+                <option value="">Selecciona un estado</option>
+                <option value="0">Operativo</option>
+                <option value="1">De baja</option>
+                <option value="2">En mantenimiento</option>
+            </select>
+        </div>
+
+        <button onclick="guardarRecurso()">Guardar</button>
+
+        <h3>Reservas</h3>
+        <hr>
+
+        <table id="tablaReservas" border="1">
+            <thead>
+                <tr>
+                    <th>Sanitario</th>
+                    <th>H. estim.</th>
+                    <th>F. Petición</th>
+                    <th>F. Inicio</th>
+                    <th>F. Fin</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <h3>Reseñas</h3>
+        <hr>
+
+        <table id="tablaResenyas" border="1">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Sanitario</th>
+                    <th>Valoración</th>
+                    <th>Comentario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <br>
+
+        <button onclick="volverListado()">Volver al listado</button>
+
+    </div>
+
+    <br>
+    <script src="rest.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
