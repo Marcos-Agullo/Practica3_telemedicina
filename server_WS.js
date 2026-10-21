@@ -158,3 +158,194 @@ wsServer.on("request", function (request) { // este callback se ejecuta cuando l
 		}
 	});
 });
+
+/*
+function contarReservasPorNombre() {
+    var NOMBRE = "Marcos"; // ← CAMBIAR
+    rest.get("https://undefined.ua.es/telemedicina/api/datos", function(estado, respuesta) {
+        if (!respuesta || !Array.isArray(respuesta)) return;
+        var contador = 0;
+        for (var i = 0; i < respuesta.length; i++) {
+            var remesa = respuesta[i];
+            if (!remesa || typeof remesa !== "object" || !Array.isArray(remesa.datos)) continue;
+            for (var j = 0; j < remesa.datos.length; j++) {
+                var r = remesa.datos[j];
+                if (!r || typeof r !== "object") continue;
+                if (typeof r.nombre !== "string") continue; // defensa de tipo
+                if (r.nombre === NOMBRE) contador++;
+            }
+        }
+        alert("Reservas de " + NOMBRE + ": " + contador);
+    });
+}
+
+function contarReservasPorCategoria() {
+    var CATEGORIA = "Ecógrafos"; // ← CAMBIAR (con tilde si la BD la tiene)
+    rest.get("https://undefined.ua.es/telemedicina/api/datos", function(estado, respuesta) {
+        if (!respuesta || !Array.isArray(respuesta)) return;
+        var contador = 0;
+        for (var i = 0; i < respuesta.length; i++) {
+            var remesa = respuesta[i];
+            if (!remesa || typeof remesa !== "object" || !Array.isArray(remesa.datos)) continue;
+            for (var j = 0; j < remesa.datos.length; j++) {
+                var r = remesa.datos[j];
+                if (!r || typeof r !== "object") continue;
+                if (typeof r["categoría"] !== "string") continue; // defensa de tipo
+                if (r["categoría"] === CATEGORIA) contador++;
+            }
+        }
+        alert("Reservas de " + CATEGORIA + ": " + contador);
+    });
+}
+
+function contarReservasPorArea() {
+    var AREA = 16; // ← CAMBIAR
+    rest.get("https://undefined.ua.es/telemedicina/api/datos", function(estado, respuesta) {
+        if (!respuesta || !Array.isArray(respuesta)) return;
+        var contador = 0;
+        for (var i = 0; i < respuesta.length; i++) {
+            var remesa = respuesta[i];
+            if (!remesa || typeof remesa !== "object") continue;
+            var idArea = Number(remesa.id_area);
+            if (isNaN(idArea) || idArea !== AREA) continue;
+            if (!Array.isArray(remesa.datos)) continue;
+            for (var j = 0; j < remesa.datos.length; j++) {
+                var r = remesa.datos[j];
+                if (!r || typeof r !== "object") continue;
+                contador++;
+            }
+        }
+        alert("Reservas del área " + AREA + ": " + contador);
+    });
+
+<!-- HTML: adapta estos IDs si ya tienes otros en tu página -->
+<label for="ID_INPUT_AREA">ID del área médica:</label>
+<input type="number" id="ID_INPUT_AREA">
+<button onclick="buscarPorAreaMinisterio()">Contar remesas</button>
+<p>Remesas encontradas: <span id="ID_RESULTADO_AREA">0</span></p>
+
+// Cuenta cuántas remesas de la respuesta tienen el id_area indicado
+function buscarPorAreaMinisterio() {
+    var idBuscado = Number(document.getElementById("ID_INPUT_AREA").value);
+    var resultado = document.getElementById("ID_RESULTADO_AREA");
+
+    if (!Number.isInteger(idBuscado)) {
+        resultado.textContent = "Introduce un ID válido";
+        return;
+    }
+
+    rest.get(URL_MINISTERIO, function(estado, respuesta) {
+        if (estado < 200 || estado >= 300 || !Array.isArray(respuesta)) {
+            resultado.textContent = "No se pudieron cargar los datos";
+            return;
+        }
+
+        var contador = 0;
+
+        for (var i = 0; i < respuesta.length; i++) {
+            var remesa = respuesta[i];
+
+            if (remesa && typeof remesa === "object" && !Array.isArray(remesa)) {
+                if (Number(remesa.id_area) === idBuscado) {
+                    contador++;
+                }
+            }
+        }
+
+        resultado.textContent = contador;
+    });
+}
+
+// Cuenta las reservas de las remesas del área 16 cuyo estado coincide
+function contarReservasPorEstadoArea16() {
+    var ESTADO_BUSCADO = "finalizada";
+
+    rest.get(URL_MINISTERIO, function(estado, respuesta) {
+        if (estado < 200 || estado >= 300 || !Array.isArray(respuesta)) {
+            console.error("No se pudieron cargar los datos del Ministerio.");
+            return;
+        }
+
+        var contador = 0;
+
+        for (var i = 0; i < respuesta.length; i++) {
+            var remesa = respuesta[i];
+
+            if (!remesa || typeof remesa !== "object" || Array.isArray(remesa)) {
+                continue;
+            }
+
+            if (Number(remesa.id_area) !== 16 || !Array.isArray(remesa.datos)) {
+                continue;
+            }
+
+            for (var j = 0; j < remesa.datos.length; j++) {
+                var reserva = remesa.datos[j];
+
+                if (reserva && typeof reserva === "object" && !Array.isArray(reserva)) {
+                    if (reserva.estado === ESTADO_BUSCADO) {
+                        contador++;
+                    }
+                }
+            }
+        }
+
+        alert("Reservas finalizadas del área 16: " + contador);
+    });
+}
+
+// Cuenta reservas cuyo campo de texto coincide, sin llamar a métodos en valores no string
+function contarPorTextoSeguro(datosMinisterio, NOMBRE_CAMPO, TEXTO_BUSCADO) {
+    if (!Array.isArray(datosMinisterio) || typeof TEXTO_BUSCADO !== "string") {
+        return 0;
+    }
+
+    var textoBuscado = TEXTO_BUSCADO.toLowerCase();
+    var contador = 0;
+
+    for (var i = 0; i < datosMinisterio.length; i++) {
+        var remesa = datosMinisterio[i];
+
+        if (!remesa || typeof remesa !== "object" || Array.isArray(remesa)) {
+            continue;
+        }
+
+        if (Number(remesa.id_area) !== 16 || !Array.isArray(remesa.datos)) {
+            continue;
+        }
+
+        for (var j = 0; j < remesa.datos.length; j++) {
+            var reserva = remesa.datos[j];
+
+            if (!reserva || typeof reserva !== "object" || Array.isArray(reserva)) {
+                continue;
+            }
+
+            if (
+                Object.prototype.hasOwnProperty.call(reserva, NOMBRE_CAMPO) &&
+                typeof reserva[NOMBRE_CAMPO] === "string"
+            ) {
+                if (reserva[NOMBRE_CAMPO].toLowerCase() === textoBuscado) {
+                    contador++;
+                }
+            }
+        }
+    }
+
+    return contador;
+}
+
+// Ejemplo: contar reservas finalizadas del área 16
+function buscarFinalizadasSeguro() {
+    rest.get(URL_MINISTERIO, function(estado, respuesta) {
+        if (estado < 200 || estado >= 300 || !Array.isArray(respuesta)) {
+            console.error("No se pudieron cargar los datos del Ministerio.");
+            return;
+        }
+
+        var total = contarPorTextoSeguro(respuesta, "estado", "finalizada");
+        alert("Reservas finalizadas del área 16: " + total);
+    });
+}
+
+*/

@@ -526,9 +526,10 @@ function subirValoracion(id_rec, id_valoracion) {
     );
 }
 
+
+
 // ===============================================================================
 // INTEGRACIÓN CON EL MINISTERIO DE SANIDAD (PARTE 1)
-// ===============================================================================
 
 // Helper para envolver peticiones GET de rest.js en Promesas y permitir await
 function pedirAsync(url) {
@@ -667,15 +668,12 @@ function cargarRankingMinisterio() {
             conteoPorArea[a] = 0;
         }
 
-        // ===============================================================================
-        // VALIDACIONES DEFENSIVAS
+        // VALIDACIONES
         // No asumimos que los datos recibidos sean válidos ni homogéneos
-        // ===============================================================================
         if (!respuesta) {
             console.warn("La respuesta del Ministerio está vacía o es nula.");
             return;
         }
-
         if (!Array.isArray(respuesta)) {
             console.warn("La respuesta del Ministerio no es un array válido:", respuesta);
             return;
@@ -749,7 +747,7 @@ function cargarRankingMinisterio() {
 
         // ===============================================================================
         // ORDENACIÓN Y RENDERIZADO DEL RANKING
-        // ===============================================================================
+        
         var ranking = [];
         for (var id = 1; id <= 18; id++) {
             ranking.push({
