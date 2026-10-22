@@ -579,5 +579,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, function(){
     console.log("Servidor gestor rest iniciado correctamente en el puerto " + PORT);
 });
-
- MKNVBHº
