@@ -65,7 +65,6 @@ app.use("/api", function(req, res, next) {
     ) {
         return next();
     }
-
     return verificarToken(req, res, next);
 });
 
