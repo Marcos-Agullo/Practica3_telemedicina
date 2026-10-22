@@ -794,16 +794,8 @@ function cargarRankingMinisterio() {
 function areasSoloUna() {
     var idAreaBuscada = Number(document.getElementById("ID_INPUT_AREA").value);
     var resultado = document.getElementById("ID_RESULTADO_AREA");
-    if (!idAreaBuscada || !Number.isInteger(idAreaBuscada)) {
-        resultado.textContent = "Introduce un id de área válido";
-        return;
-    }
+ 
     rest.get(URL_MINISTERIO, function(estado, respuesta) {
-        if (estado < 200 || estado >= 300 || !Array.isArray(respuesta)) {
-            console.error("Error obteniendo datos del Ministerio:", estado, respuesta);
-            resultado.textContent = "No se han cargado los datos";
-            return;
-        }
         var contador = 0;
         for (var i = 0; i < respuesta.length; i++) {
             var remesa = respuesta[i];
@@ -823,11 +815,6 @@ function mostrarMediaHorasArea() {
     var totalReservas = 0;
 
     rest.get(URL_MINISTERIO, function(estado, respuesta) {
-        if (estado < 200 || estado >= 300 || !Array.isArray(respuesta)) {
-            console.error("Error obteniendo datos del Ministerio:", estado, respuesta);
-            alert("No se han cargado los datos del Ministerio.");
-            return;
-        }
         for (var i = 0; i < respuesta.length; i++) {
             var remesa = respuesta[i];
             if (!remesa || Number(remesa.id_area) !== idArea || !Array.isArray(remesa.datos)) {
@@ -843,11 +830,11 @@ function mostrarMediaHorasArea() {
         }
         var nombreArea = AREAS_MEDICAS[idArea].toLowerCase();
         if (totalReservas === 0) {
-            alert("No hay reservas con horas estimadas numéricas en el área de " + nombreArea + ".");
+            alert("No hay reservas con horas estimadas numéricas en el área de " + nombreArea);
             return;
         }
         var media = sumaHoras / totalReservas;
         alert("La media de horas estimadas de uso de las reservas de área de " +
-            nombreArea + " es " + media.toLocaleString("es-ES", {maximumFractionDigits: 2}));
+            nombreArea + " es " + media.toLocaleString("es-ES", {maximumFractionDigits: 1}));
     });
 }
