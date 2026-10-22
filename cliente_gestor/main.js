@@ -789,3 +789,29 @@ function cargarRankingMinisterio() {
         }
     });
 }
+
+
+function areasSoloUna() {
+    var idAreaBuscada = Number(document.getElementById("ID_INPUT_AREA").value);
+    var resultado = document.getElementById("ID_RESULTADO_AREA");
+    if (!idAreaBuscada || !Number.isInteger(idAreaBuscada)) {
+        resultado.textContent = "Introduce un ID de área válido";
+        return;
+    }
+    rest.get(URL_MINISTERIO, function(estado, respuesta) {
+        if (estado < 200 || estado >= 300 || !Array.isArray(respuesta)) {
+            console.error("Error obteniendo datos del Ministerio:", estado, respuesta);
+            resultado.textContent = "No se pudieron cargar los datos";
+            return;
+        }
+        var contador = 0;
+        for (var i = 0; i < respuesta.length; i++) {
+            var remesa = respuesta[i];
+            if (remesa && Number(remesa.id_area) === idAreaBuscada &&
+                Array.isArray(remesa.datos) && remesa.datos.length === 1) {
+                contador++;
+            }
+        }
+        resultado.textContent = contador;
+    });
+}
